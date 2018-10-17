@@ -23,6 +23,42 @@ http://iolanguage.com/binaries.html
 
 ## コンテナの起動(Mac)
 
+ここでは、ホスト側のの`./work`ディレクトリを、コンテナ側の`/mnt/work`にマウントして使うことを想定しています。
+
 ```
 $ docker run --privileged -d --name io_server -v `pwd`/work:/mnt/work/ -it ubuntu_with_io
 ```
+
+
+## サンプルコード
+
+sample.io
+```
+Account := Object clone
+Account init :=  method(self balance := 0)
+Account deposit := method(v, self balance := balance + v)
+Account show := method(
+  write("Account balance: $", balance, "\n")
+)
+
+myAccount := Account clone
+myAccount show
+myAccount deposit(10)
+myAccount show
+```
+
+実行
+
+```
+$ io sample.io
+```
+
+実行結果
+
+```
+Account balance: $0
+Account balance: $10
+```
+
+
+
